@@ -40,22 +40,25 @@ class Solution:
         if not numbers or len(numbers) < 3:
             return []
         numbers = sorted(numbers)
-        # 遍历三元组中的最小值 起始位置
+        # 锚定/遍历三元组中的最小值 起始位置
         results = []
         for i in range(0, len(numbers) - 2):
             # 和左边一样=考虑过了 跳过  eliminate duplicates
             if i > 0 and numbers[i] == numbers[i - 1]:
                 continue
+            # i is first element in triple, find two sum数组起始位置为i + 1
             left, right, target = i + 1, len(numbers) - 1, -numbers[i]
             # 带有去重逻辑的two sum
-            self.find_two_sum(numbers, left, right, target, results)
+            self.find_two_sum_unique_pairs(numbers, left, right, target, results)
         return results
 
-    def find_two_sum(self, numbers, left, right, target, results):
+    def find_two_sum_unique_pairs(self, numbers, left, right, target, results):
+        # 原来的解left, right = 0, len(nums) - 1    没有results参数
         # O(n)
         while left < right:
             sum = numbers[left] + numbers[right]
             if sum == target:
+                # count += 1
                 results.append([-target, numbers[left], numbers[right]])
                 right -= 1
                 left += 1
@@ -68,3 +71,5 @@ class Solution:
                 right -= 1
             else:
                 left += 1
+
+
