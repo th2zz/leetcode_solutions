@@ -1,8 +1,13 @@
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        d = {}
-        for i, num in enumerate(nums):
-            if target - num in d:
-                return [i, d[target - num]]
-            d[num] = i
-
+    def twoSum(self, numbers, target):
+        numbers.sort()
+        left, right = 0, len(numbers) - 1
+        while left < right:
+            sum = numbers[left] + numbers[right]
+            if sum > target:
+                right -= 1
+            elif sum < target:
+                left += 1
+            else:
+                return [numbers[left], numbers[right]]
+        return [-1, -1]
