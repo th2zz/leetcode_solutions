@@ -23,12 +23,12 @@ Output: 10
         start, end = 0, len(nums) - 1
         while start + 1 < end:
             mid = (start + end) // 2
-            if nums[mid] < nums[mid + 1]:
+            # 从mid点向右 山峰向上倾斜 舍弃左半, 平顶山 舍弃左半
+            if nums[mid] <= nums[mid + 1]:
                 start = mid
+            # 从mid点向右 山峰向下倾斜 舍弃右半
             elif nums[mid] > nums[mid + 1]:
                 end = mid
-            elif nums[mid] == nums[mid + 1]:
-                start = mid
         return max(nums[start], nums[end])
 
 print(Solution().mountainSequence([1, 2, 4, 8, 6, 3]))
