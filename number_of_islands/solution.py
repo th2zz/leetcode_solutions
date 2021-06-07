@@ -31,5 +31,4 @@ Example
     @return: an integer
     """
     def numIslands(self, grid):
-        # write your code here
         pass
