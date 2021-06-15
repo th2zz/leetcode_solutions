@@ -31,4 +31,20 @@ Example
     @return: an integer
     """
     def numIslands(self, grid):
-        pass
+        # 特殊情况处理
+        if not grid or not grid[0]:
+            return 0
+        islands = 0
+        #  if visited, should not be visited twice
+        visited = set()
+        # traverse every pt in the grid
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                # if is sea, no need to bfs
+                # if visited, skip
+                if grid[i][j] and (i, j) not in visited:
+                    self.bfs(grid, i, j, visited)
+                    islands += 1
+        return islands
+
+
