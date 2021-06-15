@@ -47,10 +47,10 @@ Can you do it in both BFS and DFS?
     @return: Any topological order for the given graph.
     """
     def topSort(self, graph):
-        # 1. get statistics on indegree
-        node_to_indegree = self.get_indgree(graph)
+        # 1. get statistics on in-degree
+        nodes_indegree = self.get_indgree(graph)
         # 2. add all source as starting nodes
-        start_nodes = [n for n in graph if node_to_indegree[n] == 0]
+        start_nodes = [n for n in graph if nodes_indegree[n] == 0]
         queue = collections.deque(start_nodes)
         # res
         order = []
@@ -59,11 +59,15 @@ Can you do it in both BFS and DFS?
             node = queue.popleft()
             order.append(node)
             for neighbor in node.neighbors:
-                node_to_indegree[neighbor] -= 1
+                nodes_indegree[neighbor] -= 1
                 # 4. if found new source add to queue
-                if node_to_indegree[neighbor] == 0:
+                if nodes_indegree[neighbor] == 0:
                     queue.append(neighbor)
         return order
 
     def get_indgree(self, graph):
-        pass
+        nodes_indegree = {x: 0 for x in graph}
+        for node in graph:
+            for neighbor in node.neighbors:
+                nodes_indegree[neighbor] += 1
+        return nodes_indegree
