@@ -1,14 +1,22 @@
+from collections import deque
+DIRECTIONS = [(1, 0), (0, -1), (-1, 0), (0, 1)]
 class Solution:
     """
-    Description
-给一个 01 矩阵，求不同的岛屿的个数。
+    https://www.lintcode.com/problem/433/?_from=collection&fromId=161
+Algorithms
+Easy
+Accepted Rate
+36%
 
-0 代表海，1 代表岛，如果两个 1 相邻，那么这两个 1 属于同一个岛。我们只考虑上下左右为相邻。
+Description
+Given a boolean 2D matrix, 0 is represented as the sea, 1 is represented as the island. If two 1 is adjacent, we consider them in the same island. We only consider up/down/left/right adjacent.
+
+Find the number of islands.
 
 Example
-样例 1：
+Example 1:
 
-输入：
+Input:
 [
   [1,1,0,0,0],
   [0,1,0,0,1],
@@ -16,16 +24,38 @@ Example
   [0,0,0,0,0],
   [0,0,0,0,1]
 ]
-输出：
+Output:
 3
-样例 2：
+Example 2:
 
-输入：
+Input:
 [
   [1,1]
 ]
-输出：
+Output:
 1
+Tags
+Breadth First Search/BFS
+Union Find
+Related Problems
+860
+Number of Distinct Islands
+Medium
+804
+Number of Distinct Islands II
+Hard
+677
+Number of Big Islands
+Medium
+663
+Walls and Gates
+Medium
+477
+Surrounded Regions
+Medium
+434
+Number of Islands II
+Medium
 
     @param grid: a boolean 2D matrix
     @return: an integer
@@ -46,5 +76,31 @@ Example
                     self.bfs(grid, i, j, visited)
                     islands += 1
         return islands
+
+    def bfs(self, grid, x, y, visited):
+        # start from 1 tile: bfs traverse entire island
+        queue = deque([(x, y)])
+        visited.add((x, y))
+        while queue:
+            x, y = queue.popleft()
+            # traverse each direction
+            for dx, dy in DIRECTIONS:
+                next_x = x + dx
+                next_y = y + dy
+                if not self.is_valid(grid, next_x, next_y, visited):
+                    continue
+                queue.append((next_x, next_y))
+                visited.add((next_x, next_y))
+
+    def is_valid(self, grid, x, y, visited):
+        n, m = len(grid), len(grid[0])
+        # if out of bounds return false
+        if not (0 <= x < n and 0 <= y < m):
+            return False
+        # if visited, skip: avoid inf loop and redundant bfs variables
+        if (x, y) in visited:
+            return False
+        # if 1, return True, 0 False
+        return grid[x][y]
 
 
