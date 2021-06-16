@@ -58,7 +58,7 @@ Do it in-place without any extra memory.
             return None
         left_last = self.flatten_and_return_last_node(root.left)  # flatten left and right subtree and get last node
         right_last = self.flatten_and_return_last_node(root.right)
-        if not left_last:  # need to transplant flattened left subtree to root
+        if left_last:  # need to transplant flattened left subtree to root
             left_last.right = root.right
             root.right = root.left
             root.left = None
