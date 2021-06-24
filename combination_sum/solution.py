@@ -33,11 +33,11 @@ Output: [[1, 1, 1]]
         return results
 
     def dfs(self, candidates, index, current_result, remainingTarget, results):
-        if remainingTarget == 0:
-            return results.append(list(current_result))
+        if remainingTarget == 0:  # a solution set found
+            return results.append(list(current_result))  # deep copy, otherwise modifying current may change results
         for i in range(index, len(candidates)):
-            if remainingTarget < candidates[i]:
+            if remainingTarget < candidates[i]:  # pruning: no unique sum solution set here
                 break
-            current_result.append((candidates[i]))
+            current_result.append((candidates[i]))  # dfs recurse on remaining problem
             self.dfs(candidates, i, current_result, remainingTarget - candidates[i], results)
-            current_result.pop()
+            current_result.pop()  # backtrack last try on candidates[i], remainingTarget is call by value
