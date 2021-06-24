@@ -28,16 +28,16 @@ Output: [[1, 1, 1]]
         if not candidates:
             return results
         # deduplication
-        candidatesNew = sorted(list(set(candidates)))
-        self.dfs(candidatesNew, 0, [], target, results)
+        candidates_sorted = sorted(list(set(candidates)))
+        self.dfs(candidates_sorted, 0, [], target, results)
         return results
 
-    def dfs(self, candidatesNew, index, current_result, remainingTarget, results):
+    def dfs(self, candidates, index, current_result, remainingTarget, results):
         if remainingTarget == 0:
             return results.append(list(current_result))
-        for i in range(index, len(candidatesNew)):
-            if remainingTarget < candidatesNew[i]:
+        for i in range(index, len(candidates)):
+            if remainingTarget < candidates[i]:
                 break
-            current_result.append((candidatesNew[i]))
-            self.dfs(candidatesNew, i, current_result, remainingTarget - candidatesNew[i], results)
+            current_result.append((candidates[i]))
+            self.dfs(candidates, i, current_result, remainingTarget - candidates[i], results)
             current_result.pop()
