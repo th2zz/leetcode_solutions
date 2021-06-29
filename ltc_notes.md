@@ -1,3 +1,7 @@
+# Study Resources
+https://python.plainenglish.io/8-data-structures-every-python-programmer-should-know-acafd46f479b
+https://labuladong.gitbook.io/algo/
+
 # Interview cases
 
 - 逻辑思维: working solution => optimize it     

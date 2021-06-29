@@ -43,6 +43,6 @@ Output: 3
             # 这段代码可以没有 if terminate number not found already returned,
             # found and > 1 times is not possible because of first break
             # found and == 1 times already returned in the above if
-            if num == number:
-                break
+            # if num == number:
+            #     break
         return -1
