@@ -1,3 +1,8 @@
+class LinkedNode:
+    def __init__(self, key=None, value=None, next=None):
+        self.key, self.value, self.next = key, value, next
+
+
 class LRUCache:
     """
     https://www.lintcode.com/problem/134/?_from=collection&fromId=161
@@ -50,20 +55,57 @@ Hard
     """
     @param: capacity: An integer
     """
+
     def __init__(self, capacity):
-        # do intialization if necessary
+        self.capacity = capacity
+        self.dummy = LinkedNode()
+        self.tail = self.dummy
+        self.key_to_prev_node = {}
+
+    def push_back(self, node):  # append
+        self.key_to_prev_node[node.key] = self.tail
+        self.tail.next = node
+        self.tail = node
 
     """
     @param: key: An integer
     @return: An integer
     """
+
     def get(self, key):
-        # write your code here
+        if key not in self.key_to_prev_node:  # key 不存在于cache
+            return -1
+        self.kick(key)  # 刚被访问过 应该移到链表末尾
+        return self.tail.value
 
     """
     @param: key: An integer
     @param: value: An integer
     @return: nothing
     """
+
     def set(self, key, value):
-        # write your code here
+        if key in self.key_to_prev_node:
+            self.kick(key)
+            self.tail.value = value
+            return
+        self.push_back(LinkedNode(key, value))
+        if len(self.key_to_prev_node) > self.capacity:
+            self.pop_front()
+
+    def pop_front(self):
+        head = self.dummy.next  # 需要删除的头
+        del self.key_to_prev_node[head.key]
+        self.dummy.next = head.next  # dummy next后移
+        self.key_to_prev_node[head.next.key] = self.dummy  # 更新新的头的key_to_prev映射关系
+
+    def kick(self, key):  # 将key节点移动到尾部
+        prev_node = self.key_to_prev_node[key]
+        key_node = prev_node.next
+        if key_node == self.tail:
+            return
+        # 删掉key节点, push_back key node
+        prev_node.next = key_node.next  # prev_node next指向key_node next
+        self.key_to_prev_node[key_node.next.key] = prev_node  # 记录key_node next key对应的前一个节点 即prev_node
+        key_node.next = None
+        self.push_back(key_node)
