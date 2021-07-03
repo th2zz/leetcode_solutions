@@ -1,3 +1,6 @@
+import random
+
+
 class RandomizedSet:
     """
     https://www.lintcode.com/problem/657/?_from=collection&fromId=161
@@ -45,27 +48,39 @@ Insert Delete GetRandom O(1) - Duplicates allowed
 Hard
     """
     def __init__(self):
-        # do intialization if necessary
+        self.nums, self.valToindexDict = [], {}
 
     """
     @param: val: a value to the set
     @return: true if the set did not already contain the specified element or false
     """
     def insert(self, val):
-        # write your code here
+        if val in self.valToindexDict:
+            return False
+        self.nums.append(val)
+        self.valToindexDict[val] = len(self.nums) - 1
+        return True
 
     """
     @param: val: a value from the set
     @return: true if the set contained the specified element or false
     """
     def remove(self, val):
-        # write your code here
+        if val not in self.valToindexDict:
+            return False
+        index_of_val = self.valToindexDict[val]
+        last_val = self.nums[-1]
+        self.nums[index_of_val] = last_val  # val不是最后一个元素 把最后一个元素放到val位置上
+        self.valToindexDict[last_val] = index_of_val
+        self.nums.pop()  # 无脑delete last element O(1)
+        del self.valToindexDict[val]
+        return True
 
     """
     @return: Get a random element from the set
     """
     def getRandom(self):
-        # write your code here
+        return self.nums[random.randint(0, len(self.nums) - 1)]
 
 
 # Your RandomizedSet object will be instantiated and called as such:
