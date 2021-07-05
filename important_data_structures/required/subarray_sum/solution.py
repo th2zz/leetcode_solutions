@@ -35,7 +35,24 @@ Subarray Sum Closest
 Medium
 
     @param nums: A list of integers
-    @return: A list of integers includes the index of the first number and the index of the last number
+    @return: A list of integers includes the index of the first number and the index of the last number that sums to 0
     """
+
+    # at pos i, prefix a + ... + b already seen
+    # a + ... + b + c + ... + nums[i] = a + ... + b  <=>  c + ... + nums[i] = 0
+    # then we return [index of c, i]
     def subarraySum(self, nums):
-        pass
+        d = {0: -1}  # prefix sum -> index
+        prefix_sum = 0
+        for i, num in enumerate(nums):
+            prefix_sum += num
+            if prefix_sum in d:
+                return [d[prefix_sum] + 1, i]
+            d[prefix_sum] = i
+        return [-1, -1]
+
+
+nums = [-3, 1, 2, -3, 4]
+print(Solution().subarraySum(nums))
+nums = [-3, 1, -4, 2, -3, 4]
+print(Solution().subarraySum(nums))

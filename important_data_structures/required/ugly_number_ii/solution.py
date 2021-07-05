@@ -54,14 +54,14 @@ Easy
     """
 
     def nthUglyNumber(self, n):
-        heap = [1]  # keep ugly numbers
-        seen = set([1])  # visited set
+        heap = [1]  # fixed size n min-heap to keep ugly numbers
+        visited = {1}  # visited set
         curr_ugly = 1
         for _ in range(n):
             curr_ugly = heapq.heappop(heap)  # 如果是最后一个丑数 不需要把乘积放到heap
             for factor in [2, 3, 5]:
-                new_ugly = curr_ugly * factor
-                if new_ugly not in seen:
-                    seen.add(new_ugly)
+                new_ugly = curr_ugly * factor  # ugly number only has factor 2 3 5
+                if new_ugly not in visited:
+                    visited.add(new_ugly)
                     heapq.heappush(heap, new_ugly)
         return curr_ugly
