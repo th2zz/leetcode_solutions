@@ -1,7 +1,8 @@
 class Solution:
     """https://www.lintcode.com/problem/683/?_from=collection&fromId=161
     Description
-Give a dictionary of words and a sentence with all whitespace removed, return the number of sentences you can form by inserting whitespaces to the sentence so that each word can be found in the dictionary.
+Give a dictionary of words and a sentence with all whitespace removed, return the number of sentences you can form by
+inserting whitespaces to the sentence so that each word can be found in the dictionary.
 
 Ignore case
 
@@ -32,7 +33,8 @@ Partition DP
 
     @param s: A string
     @param dict: A set of word
-    @return: the number of possible sentences.
+    @return: the number of possible sentences. / how many ways to form the sentence with given words in dict
+    can we use a word multiple times: no
     """
     def wordBreak3(self, s, dict):
         if not s or not dict:
@@ -54,9 +56,9 @@ Partition DP
         if index in memo:  # s[index..] processed before, return result
             return memo[index]
         result = 0  # s[index..] 方案总数
-        for end in range(index + 1, len(s) + 1):  # enumerate word end exclusive
+        for end in range(index + 1, len(s) + 1):  # enumerate word end exclusive end range [index + 1, len(s)]
             if end - index > max_len:  # pruning based on max len in all words
-                break  # end - index = [index, ..., end - 1] substring length
+                break  # end - index = [index, ..., end - 1] [index...]substring length
             word = s[index: end]  # get s substring [index, ..., end - 1] as word
             if word not in lower_dict:  # skip if it is not in dict
                 continue  # recurse on s[end..] add that to current result
