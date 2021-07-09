@@ -70,7 +70,7 @@ Hard
     @return: is Match?
     """
     def isMatch(self, s, p):
-        if not s or not p:
+        if s is None or p is None:
             return False
         return self.is_match_helper(s, 0, p, 0, {})
 
@@ -99,5 +99,5 @@ Hard
         else:  # pattern char == *, * match s[s_index] advance s ptr || or * match none + advanced p ptr
             match = self.is_match_helper(source, s_index + 1, pattern, p_index, memo) \
                     or self.is_match_helper(source, s_index, pattern, p_index + 1, memo)
-        memo[(s_index, p_index)] = match
+        memo[(s_index, p_index)] = match  # keep res in memo
         return match
