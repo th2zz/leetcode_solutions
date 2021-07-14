@@ -1,3 +1,3 @@
-# leetcode_solutions
+# leetcode_grinding
 
-My own solutions for leetcode problems in python.
+Some of my own solutions and summary for interview problems, mainly in python.
