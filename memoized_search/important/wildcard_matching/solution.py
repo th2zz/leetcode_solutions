@@ -65,39 +65,38 @@ Related Problems
 Regular Expression Matching
 Hard
 
-    @param s: A string
-    @param p: A string includes "?" and "*"
+    @param source: A string
+    @param pattern: A string includes "?" and "*"
     @return: is Match?
     """
-    def isMatch(self, s, p):
-        if s is None or p is None:
-            return False
-        return self.is_match_helper(s, 0, p, 0, {})
 
-    def all_star(self, pattern, p_index):  # check if pattern[p_index:len(pattern)] are all *
+    def isMatch(self, source, pattern):
+        if source is None or pattern is None:
+            return False
+        return self.is_match_helper(source, 0, pattern, 0, {})
+
+    def all_star(self, pattern, p_index):  # check if pattern[j:len(pattern)] are all *
         for i in range(p_index, len(pattern)):
             if pattern[i] != '*':
                 return False
         return True
 
-    def is_match_char(self, s_char, p_char):
-        return s_char == p_char or p_char == '?'
+    def is_match_char(self, s, p):
+        return s == p or p == '?'
 
-    def is_match_helper(self, source, s_index, pattern, p_index, memo):
-        if p_index == len(pattern):  # pattern string already used up
-            return s_index == len(source)
-        if s_index == len(source):  # pattern比s长 s用完了 p后面必须全是star
-            return self.all_star(pattern, p_index)
-        if (s_index, p_index) in memo:  # check memo
-            return memo[(s_index, p_index)]
-        s_char = source[s_index]
-        p_char = pattern[p_index]
-        match = False
-        if p_char != '*':
-            match = self.is_match_char(s_char, p_char) and self.is_match_helper(source, s_index + 1,
-                                                                                pattern, p_index + 1, memo)
-        else:  # pattern char == *, * match s[s_index] advance s ptr || or * match none + advanced p ptr
-            match = self.is_match_helper(source, s_index + 1, pattern, p_index, memo) \
-                    or self.is_match_helper(source, s_index, pattern, p_index + 1, memo)
-        memo[(s_index, p_index)] = match  # keep res in memo
-        return match
+    def is_match_helper(self, source, i, pattern, j, memo):
+        if (i, j) in memo:  # check memo
+            return memo[(i, j)]
+        # len(pattern) > len(source) s is used up, every char after this point in pattern should be star
+        if i == len(source):
+            return self.all_star(pattern, j)
+        if j == len(pattern):  # pattern string already used up
+            return i == len(source)
+        if pattern[j] != '*':
+            matched = self.is_match_char(source[i], pattern[j]) and self.is_match_helper(source, i + 1,
+                                                                                         pattern, j + 1, memo)
+        else:  # pattern char == *, * match s[i] advance s ptr || or * match none + advanced p ptr
+            matched = self.is_match_helper(source, i + 1, pattern, j, memo) \
+                      or self.is_match_helper(source, i, pattern, j + 1, memo)
+        memo[(i, j)] = matched  # keep res in memo
+        return matched
