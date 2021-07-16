@@ -52,7 +52,7 @@ Amazon
         n, m = len(grid), len(grid[0])
         dp = [[float('inf')] * 3 for _ in range(n)]  # unreachable except (0, 0), set shortest path to max;   n*3 table
         dp[0][0] = 0  # shortest path to x, y
-        for j in range(1, m):
+        for j in range(1, m):  # 只在外层循环变量滚动 滚动size为依赖范围
             for i in range(n):
                 dp[i][j % 3] = float('inf')  # 滚动做法在重复利用之前的空间 所以需要这行reset
                 if grid[i][j]:  # skip obstacle
