@@ -64,7 +64,7 @@ Medium
                 if factor * factor != x and factor != 1:  # 不重复 不为1
                     factors.append(x // factor)  # 放上另一半
             factor += 1
-        return factor
+        return factors
 
     # restore path with prev dict start from last_num
     def get_path(self, prev, last_num):
