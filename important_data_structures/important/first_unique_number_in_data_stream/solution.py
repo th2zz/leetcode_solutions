@@ -1,7 +1,8 @@
 class Solution:
     """https://www.lintcode.com/problem/685/?_from=collection&fromId=161
     Description
-Given a continuous stream of data, write a function that returns the first unique number (including the last number) when the terminating number arrives. If the terminating number is not found, return -1.
+Given a continuous stream of data, write a function that returns the first unique number (including the last number)
+when the terminating number arrives. If the terminating number is not found, return -1.
 
 Example
 Example1
@@ -24,7 +25,7 @@ Input:
 Output: 3
     @param nums: a continuous stream of numbers
     @param number: the terminating number
-    @return: returns the first unique number
+    @return: returns the first unique number up to and including the terminating number
     """
 
     def firstUniqueNumber(self, nums, number):
