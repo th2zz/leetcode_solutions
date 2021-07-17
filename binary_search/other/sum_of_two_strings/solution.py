@@ -26,5 +26,25 @@ Quora
     @param B: a string
     @return: return the sum of two strings
     """
+
     def SumofTwoStrings(self, A, B):
-        pass
+        if not A and not B:
+            return ''
+        if not A:
+            return B
+        if not B:
+            return A
+        i, j = len(A) - 1, len(B) - 1
+        res = ''
+        while i >= 0 and j >= 0:
+            res = str(int(A[i]) + int(B[j])) + res
+            i -= 1
+            j -= 1
+        if i >= 0:
+            res = A[:i + 1] + res
+        if j >= 0:
+            res = B[:j + 1] + res
+        return res
+
+# print(Solution().SumofTwoStrings("99", "111"))
+# print(Solution().SumofTwoStrings("2", "321"))
